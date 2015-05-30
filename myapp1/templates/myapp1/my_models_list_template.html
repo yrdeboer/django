@@ -1,0 +1,25 @@
+<h1>List:</h1>
+
+{% if my_models_list %}
+
+    <table border=1>
+
+    {% for my_model in my_models_list  %}
+
+    <tr>
+
+      <td><a href="/myapp1/{{ my_model.id }}/"><b>{{ my_model.name }}</b></a></td>
+      <td>{{ my_model.field1 }}</td>
+      <td>{{ my_model.field2 }}</td>
+
+    </tr>
+
+    {% endfor %}
+
+    </table>					  
+
+{% else %}
+
+    <p>No models available.</p>
+
+{% endif %}

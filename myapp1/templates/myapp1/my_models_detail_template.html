@@ -1,0 +1,33 @@
+<h1>Detail:</h1>
+
+<table border=1>
+
+  <tr>
+    <td>Name:   </td><td> {{ my_model.name }}</td>
+  </tr>
+
+  {% for p in user_permissions %}
+  <li>{{ p }}</li>
+  {% endfor %}
+
+  <!-- Only display if user has view permission -->
+  <tr>
+
+    <td>Field 1: </td>
+
+    <td>
+    {% if 'can_view_field1' in user_permissions %}
+    {{ my_model.field1 }}
+    {% else %}
+    No rights to see field1
+    {% endif %}
+    </td>
+
+  </tr>
+
+
+  <tr>
+    <td>Field 2: </td><td>{{ my_model.field2 }}</td>
+  </tr>
+
+</table>					  

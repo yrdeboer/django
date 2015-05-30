@@ -1,0 +1,26 @@
+<h1>Login Form</h1>
+
+<form action="/myapp1/login_result" method="post">
+  {% csrf_token %}
+  <table>
+    <tr>
+      <td>
+	<label username='username'>user name: </label>
+	<input name="username" type="text">
+
+      </td><td>
+
+	<label password='password'>password: </label>
+	<input name="password" type="text">
+
+      </td><td>
+
+	<input type="submit" value="Submit">
+	
+      </td>
+
+    </tr>
+  </table>
+
+
+</form>
