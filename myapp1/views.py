@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import MyModel
+from .models import MyModel, PairUser
 
 from django.contrib.auth import authenticate, login
 
@@ -67,3 +67,18 @@ def detail_view(request, my_model_id):
     context = {'my_model': my_model, 'user_permissions': user_permissions}
     return render(request, 'myapp1/my_models_detail_template.html', context)
 
+def list_view_pairholders(request):
+
+    my_ph_user_list = PairUser.objects.all()
+    print('list_view_pairholders, list: {}'.format(my_ph_user_list))
+
+    # Print pairs
+    for pair_user in my_ph_user_list:
+
+        print('list_view_pairholders, pair_user = {}'.format(pair_user))
+        for pair in pair_user.pairs.all():
+
+            print('  list_view_pairholders, pair = {}'.format(pair))
+
+    context = {'my_ph_user_list': my_ph_user_list,}
+    return render(request, 'myapp1/my_ph_user_list_template.html', context)

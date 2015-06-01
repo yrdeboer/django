@@ -2,6 +2,43 @@ from django.db import models
 from django.contrib.auth.models import Permission, User
 
 
+class KeyModel(models.Model):
+
+    def __str__(self):
+        return self.key_name
+
+    key_name = models.CharField(max_length=40)
+
+
+class ValueModel(models.Model):
+
+    def __str__(self):
+        return self.value_name
+
+    value_name = models.CharField(max_length=40)
+
+
+class PairHolder(models.Model):
+
+    def __str__(self):
+        return self.key.key_name + '_' + self.val.value_name
+
+    class Meta:
+        unique_together = ['key', 'val']
+
+    key = models.ForeignKey(KeyModel);
+    val = models.ForeignKey(ValueModel);
+    
+
+class PairUser(models.Model):
+
+    def __str__(self):
+        return self.name
+    
+    name = models.CharField(max_length=40)
+    pairs = models.ManyToManyField(PairHolder)
+
+
 class MyRole(models.Model):
 
     def __str__(self):
