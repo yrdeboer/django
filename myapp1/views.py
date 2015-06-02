@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import MyModel, PairUser
+from .models import MyModel, PairUser, OSPModel1, OSPRole
 
 from django.contrib.auth import authenticate, login
 
@@ -41,6 +41,20 @@ def login_result_view(request):
 
 
 def list_view(request):
+
+    print('list_view')
+
+    # Pull 1 (not all!) OSPModel1 instance from the db
+    osp_model = OSPModel1.objects.all()[:1].get()
+    print('list_view, osp_model = {}'.format(osp_model))
+
+    # Pull 1 (not all!) OSPRole instance from the db
+    osp_role = OSPRole.objects.all()[:1].get()
+    print('list_view, osp_role = {}'.format(osp_role))
+
+    # Fetch permissions from role for osp_model
+    perms = osp_role.get_model_permissions(osp_model)
+    print('list_view perms = {}'.format(perms))
 
     my_models_list = MyModel.objects.get_queryset_user(request.user.myuser).all()
     print('list_view, my models list: {}'.format(my_models_list))

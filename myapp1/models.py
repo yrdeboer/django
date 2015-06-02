@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import Permission, User
+from django.contrib.contenttypes.models import ContentType
 
 
 class KeyModel(models.Model):
@@ -154,5 +155,46 @@ class MyModel(models.Model):
         print('  Returning role_permissions: {}'.format(role_permissions))
         
         return role_permissions
+
+
+class OSPModel1(models.Model):
+
+    def __str__(self):
+        return self.name
+
+    name = models.CharField(max_length=40)
+
+
+class OSPModel2(models.Model):
+
+    def __str__(self):
+        return self.name
+
+    name = models.CharField(max_length=40)
+    
+
+class OSPPermission(models.Model):
+
+    def __str__(self):
+        return self.name
+
+    name = models.CharField(max_length=40)
+
+    content_type = models.ForeignKey(ContentType)
+
+
+class OSPRole(models.Model):
+
+    def __str__(self):
+        return self.role_name
+
+    role_name = models.CharField(max_length=40)
+
+    perms = models.ManyToManyField(OSPPermission)
+
+    def get_model_permissions(self, osp_model):
+
+        osp_model_ct = ContentType.objects.get_for_model(osp_model)
+        return [ p for p in self.perms.all() if p.content_type == osp_model_ct]
 
 
